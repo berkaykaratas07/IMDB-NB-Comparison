@@ -1,0 +1,39 @@
+# Python ile ilgili dosyalar
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Virtual environment (venv)
+.venv/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# IDE Dosyaları
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Docker ile ilgili dosyalar
+*.dockerignore
+Dockerfile~
+
+# Çalışma dosyaları
+.env
+config.json
+*.sqlite3
+*.db
+
+# Logs ve geçici dosyalar
+logs/
+*.log
+*.out
+*.pid
