@@ -78,7 +78,7 @@ def predict(text):
 @app.route('/predict', methods=['POST'])
 def predict_sentiment():
     try:
-        review_text = request.form.get("review")  # Formdan veriyi al
+        review_text = request.form.get("review")
         cleaned_text = preprocess_text(review_text)
         prediction = predict(cleaned_text)
         sentiment = "Positive 😊" if prediction == 1 else "Negative 😞"
