@@ -16,11 +16,11 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-# 📌 Dataset yükleme
+
 df = pd.read_csv('IMDB_Dataset.csv')
 df['sentiment'] = df['sentiment'].apply(lambda x: 1 if x == 'positive' else 0)
 
-# 📌 Metin ön işleme
+
 def preprocess_text(text):
     text = re.sub(r'<[^<>]*>', '', text)
     text = re.sub(r'https?://\S+|www\.\S+', '', text)
@@ -33,12 +33,12 @@ def preprocess_text(text):
 
 df['review'] = df['review'].apply(preprocess_text)
 
-# 📌 Veriyi eğitim ve test setine ayır
+
 train, test = train_test_split(df, test_size=0.25, random_state=42)
 X_train, y_train = train['review'], train['sentiment']
 X_test, y_test = test['review'], test['sentiment']
 
-# 📌 Naive Bayes modelini eğit
+
 vocab = set()
 word_counts = defaultdict(lambda: [0, 0])
 class_doc_counts = [0, 0]
@@ -61,7 +61,7 @@ def compute_prob(word, label):
     total_words_in_class = total_words_per_class[label]
     return (word_count + 1) / (total_words_in_class + vocab_size)
 
-# 📌 Model tahmin fonksiyonu
+
 def predict(text):
     words = text.split()
     log_prob_0 = class_doc_counts[0] / sum(class_doc_counts)
@@ -74,7 +74,7 @@ def predict(text):
 
     return 1 if log_prob_1 > log_prob_0 else 0
 
-# 📌 API için tahmin endpoint'i
+
 @app.route('/predict', methods=['POST'])
 def predict_sentiment():
     try:
@@ -86,6 +86,6 @@ def predict_sentiment():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-# 📌 Flask Sunucusunu Başlat
+
 if __name__ == '__main__':
     app.run(debug=True)
